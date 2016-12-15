@@ -66,7 +66,6 @@ public class MatrixShift90Deg {
                 matrix[bottomRow][rightCol-j]= matrix[topRow+j][rightCol];
                 matrix[topRow+j][rightCol]= temp;
 
-
             }
         }
         printMatrix(matrix);
