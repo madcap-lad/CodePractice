@@ -19,7 +19,8 @@ public class PartitionLL {
         linkedList.add(1);
         linkedList.add(5);
         linkedList.printLinkedList();
-        new PartitionLL().Partition(linkedList.head, 5);
+//        new PartitionLL().Partition(linkedList.head, 5);
+        new PartitionLL().PartitionByRearrange(linkedList.head, 5);
         System.out.println("After Partitioning the LL");
         linkedList.printLinkedList();
     }
@@ -36,19 +37,54 @@ public class PartitionLL {
             if (current != null)
                 runner = current.next;
 
-            while (runner != null && runner.data >= partition )
+            while (runner != null && runner.data >= partition)
                 runner = runner.next;
 
-            if (runner != null && current != null  ) {
+            if (runner != null && current != null) {
                 int temp = current.data;
                 current.data = runner.data;
                 runner.data = temp;
-            }
-            else
-                 break;
+            } else
+                break;
         }
 
     }
 
+
+    public LinkedList.Node PartitionByRearrange(LinkedList.Node head, int partition) {
+        LinkedList.Node node = head;
+        LinkedList.Node smallStart = null;
+        LinkedList.Node smallEnd = null;
+        LinkedList.Node largerStart = null;
+        LinkedList.Node largerEnd = null;
+        LinkedList.Node prev = null;
+        while (node != null) {
+            if (node.data < partition) {
+                if (smallStart == null) {
+                    smallStart = node;
+                    smallEnd =node;
+
+                } else {
+                    smallEnd.next = node;
+                    smallEnd = smallEnd.next;
+                }
+                if (prev == null) {
+                    head = node.next;
+                } else {
+                    prev.next = node.next;
+                }
+                node = node.next;
+                smallEnd.next = null;
+            } else {
+                prev = node;
+                node = node.next;
+            }
+
+        }
+        smallEnd.next = head;
+
+        return smallStart;
+
+    }
 
 }
